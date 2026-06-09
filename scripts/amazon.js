@@ -84,5 +84,6 @@ document.querySelectorAll(".add-to-cart-button").forEach((button) => {
     cartModule.updateCartQuantityElement(quantity);
     addedMessage(productId);
     console.log(cartModule.cart);
+    cartModule.saveToLocalStorage();
   });
 });
