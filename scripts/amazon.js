@@ -58,6 +58,7 @@ products.forEach((product) => {
 });
 
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
+cartModule.updateCartQuantityElement();
 
 function addedMessage(productId) {
   const addedMessageElement = document.querySelector(
