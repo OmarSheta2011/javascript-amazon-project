@@ -53,10 +53,6 @@
   margin-bottom: 12px;
 }
 
-.payment-summary {
-  padding-bottom: 5px;
-}
-
 @media (max-width: 1000px) {
   .payment-summary {
     /* grid-row: 1 means this element will be placed into row
@@ -223,6 +219,7 @@
 .is-editing-quantity .save-quantity {
   display: initial;
 }
-.is-editing-quantity .update-quantity-link , .is-editing-quantity .quantity-label {
+.is-editing-quantity .update-quantity-link,
+.is-editing-quantity .quantity-label {
   display: none;
 }
