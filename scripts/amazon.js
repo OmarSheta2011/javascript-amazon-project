@@ -82,7 +82,7 @@ document.querySelectorAll(".add-to-cart-button").forEach((button) => {
     );
     const quantity = Number(quantityElement.value);
     cartModule.addToCart(productId, quantity);
-    cartModule.updateCartQuantityElement(quantity);
+    cartModule.updateCartQuantityElement();
     addedMessage(productId);
     console.log(cartModule.cart);
     cartModule.saveToLocalStorage();
