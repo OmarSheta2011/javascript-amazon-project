@@ -138,6 +138,20 @@ function renderOrderSummary() {
       const quantityLabel = container.querySelector(".quantity-label");
       quantityInput.value = quantityLabel.innerHTML;
       container.classList.add("is-editing-quantity");
+      document.body.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          if (Number(quantityInput.value) < 0) {
+            alert("Not a valid Quantity");
+          } else if (Number(quantityInput.value) === 0) {
+            removeFromCart(productId);
+            renderOrderSummary();
+          } else {
+            let newQuantity = Number(quantityInput.value);
+            updateQuantity(productId, newQuantity);
+            renderOrderSummary();
+          }
+        }
+      });
       saveElement.addEventListener("click", () => {
         if (Number(quantityInput.value) < 0) {
           alert("Not a valid Quantity");
