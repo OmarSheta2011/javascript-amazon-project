@@ -12,11 +12,10 @@ import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@1.11.21/+esm";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 // ---------------------------------------------------------------
 
-let matchingProduct;
-const date = dayjs();
-
 function renderOrderSummary() {
   let html = "";
+  let matchingProduct;
+  const date = dayjs();
 
   cart.forEach((cartItem) => {
     let deliveryDate;
@@ -124,7 +123,7 @@ function renderOrderSummary() {
     link.addEventListener("click", () => {
       const { productId } = link.dataset;
       removeFromCart(productId);
-      renderOrderSummary()
+      renderOrderSummary();
     });
   });
 
@@ -144,11 +143,11 @@ function renderOrderSummary() {
           alert("Not a valid Quantity");
         } else if (Number(quantityInput.value) === 0) {
           removeFromCart(productId);
-          renderOrderSummary()
+          renderOrderSummary();
         } else {
           let newQuantity = Number(quantityInput.value);
           updateQuantity(productId, newQuantity);
-          renderOrderSummary()
+          renderOrderSummary();
         }
       });
     });
@@ -162,4 +161,5 @@ function renderOrderSummary() {
     });
   });
 }
+
 renderOrderSummary();
