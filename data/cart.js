@@ -17,7 +17,7 @@ export function addToCart(productId, quantity) {
     cart.push({
       productId,
       quantity,
-      deliveryOptionId: "1",
+      deliveryOptionId: "3",
     });
   }
   updateCartQuantityElement();
@@ -60,3 +60,13 @@ export function removeFromCart(productId) {
   saveToLocalStorage();
 }
 
+export function updateDeliveryOption(deliveryOptionId, productId) {
+  let matchingProduct;
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      matchingProduct = cartItem;
+    }
+  });
+  matchingProduct.deliveryOptionId = deliveryOptionId;
+  saveToLocalStorage();
+}
