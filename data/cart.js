@@ -1,3 +1,5 @@
+import { products } from "./products.js";
+
 export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 export function saveToLocalStorage() {
@@ -30,11 +32,9 @@ export function updateCartQuantityElement() {
     cartQuantity += cartItem.quantity;
   });
 
-  const cartQuantityElement = document
-    .querySelectorAll(".js-cart-quantity")
-    .forEach((element) => {
-      element.innerHTML = cartQuantity;
-    });
+  document.querySelectorAll(".js-cart-quantity").forEach((element) => {
+    element.innerHTML = cartQuantity;
+  });
 }
 
 export function updateQuantity(productId, newQuantity) {
@@ -69,4 +69,19 @@ export function updateDeliveryOption(deliveryOptionId, productId) {
   });
   matchingProduct.deliveryOptionId = deliveryOptionId;
   saveToLocalStorage();
+}
+
+export function calculateTotalProducts() {
+  let totalCents = 0;
+  cart.forEach((cartItem) => {
+    let matchingProduct;
+    products.forEach((product) => {
+      if (cartItem.productId === product.id) {
+        matchingProduct = product;
+      }
+    });
+
+    totalCents += matchingProduct.priceCents * cartItem.quantity;
+  });
+  return totalCents;
 }

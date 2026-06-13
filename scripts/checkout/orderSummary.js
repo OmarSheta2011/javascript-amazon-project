@@ -1,7 +1,6 @@
 import {
   cart,
   removeFromCart,
-  saveToLocalStorage,
   updateCartQuantityElement,
   updateDeliveryOption,
   updateQuantity,
@@ -10,6 +9,7 @@ import { products } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
 import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@1.11.21/+esm";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import renderPaymentSummary from "./paymentSummary.js";
 // ---------------------------------------------------------------
 
 export default function renderOrderSummary() {
@@ -124,6 +124,7 @@ export default function renderOrderSummary() {
       const { productId } = link.dataset;
       removeFromCart(productId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 
@@ -145,10 +146,12 @@ export default function renderOrderSummary() {
           } else if (Number(quantityInput.value) === 0) {
             removeFromCart(productId);
             renderOrderSummary();
+            renderPaymentSummary();
           } else {
             let newQuantity = Number(quantityInput.value);
             updateQuantity(productId, newQuantity);
             renderOrderSummary();
+            renderPaymentSummary();
           }
         }
       });
@@ -158,10 +161,12 @@ export default function renderOrderSummary() {
         } else if (Number(quantityInput.value) === 0) {
           removeFromCart(productId);
           renderOrderSummary();
+          renderPaymentSummary();
         } else {
           let newQuantity = Number(quantityInput.value);
           updateQuantity(productId, newQuantity);
           renderOrderSummary();
+          renderPaymentSummary();
         }
       });
     });
