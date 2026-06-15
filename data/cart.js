@@ -91,7 +91,7 @@ export function updateDeliveryOption(deliveryOptionId, productId) {
 export function calculateTotalProducts() {
   let totalCents = 0;
   cart.forEach((cartItem) => {
-    let matchingProduct = getProduct(cartItem.productId)
+    let matchingProduct = getProduct(cartItem.productId);
     totalCents += matchingProduct.priceCents * cartItem.quantity;
   });
   return totalCents;

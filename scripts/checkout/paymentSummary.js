@@ -17,7 +17,7 @@ export default function renderPaymentSummary() {
   const tax = calculateTax(0.1);
   const orderTotal = tax + totalBefoteTax;
 
-  let html = ` <div class="payment-summary-title">Order Summary</div>
+  const html = ` <div class="payment-summary-title">Order Summary</div>
 
         <div class="payment-summary-row">
           <div>Items (<span class="js-cart-quantity">${cartQuantity}</span>):</div>
