@@ -79,16 +79,16 @@ export default function renderOrderSummary() {
   function generateOptions(matchingProduct, cartItem) {
     let options = "";
     deliveryOptions.forEach((option) => {
-      let shiping;
+      let shipping;
       let deliveryDate = date.add(option.deliveryDate, "day");
       let deliveryDateFormatted = deliveryDate.format("dddd, MMMM DD");
 
       if (option.id === "1") {
-        shiping = "FREE";
+        shipping = "FREE";
       } else if (option.id === "2") {
-        shiping = `$${formatCurrency(option.deliveryPriceCents)}`;
+        shipping = `$${formatCurrency(option.deliveryPriceCents)}`;
       } else if (option.id === "3") {
-        shiping = `$${formatCurrency(option.deliveryPriceCents)}`;
+        shipping = `$${formatCurrency(option.deliveryPriceCents)}`;
       }
 
       options += `
@@ -104,7 +104,7 @@ export default function renderOrderSummary() {
                       ${deliveryDateFormatted}
                     </div>
                     <div class="delivery-option-price">
-                      ${shiping} - Shipping
+                      ${shipping} - Shipping
                     </div>
                   </div>
                   </div>
@@ -139,7 +139,7 @@ export default function renderOrderSummary() {
       const quantityLabel = container.querySelector(".quantity-label");
       quantityInput.value = quantityLabel.innerHTML;
       container.classList.add("is-editing-quantity");
-      document.body.addEventListener("keydown", (event) => {
+      quantityInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           if (Number(quantityInput.value) < 0) {
             alert("Not a valid Quantity");
@@ -177,6 +177,7 @@ export default function renderOrderSummary() {
       const { deliveryOptionId, productId } = element.dataset;
       updateDeliveryOption(deliveryOptionId, productId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }

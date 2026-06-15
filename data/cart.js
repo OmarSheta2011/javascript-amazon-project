@@ -1,4 +1,5 @@
-import { products } from "./products.js";
+import { deliveryOptions } from "./deliveryOptions.js";
+import { getProduct, products } from "./products.js";
 
 export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -35,6 +36,19 @@ export function updateCartQuantityElement() {
   document.querySelectorAll(".js-cart-quantity").forEach((element) => {
     element.innerHTML = cartQuantity;
   });
+  return cartQuantity;
+}
+
+export function calculateshipping() {
+  let shipping = 0;
+  cart.forEach((cartItem) => {
+    deliveryOptions.forEach((option) => {
+      if (cartItem.deliveryOptionId === option.id) {
+        shipping += option.deliveryPriceCents;
+      }
+    });
+  });
+  return shipping;
 }
 
 export function updateQuantity(productId, newQuantity) {
@@ -60,6 +74,9 @@ export function removeFromCart(productId) {
   saveToLocalStorage();
 }
 
+export const calculateTax = (taxInDecimal) =>
+  taxInDecimal * (calculateshipping() + calculateTotalProducts());
+
 export function updateDeliveryOption(deliveryOptionId, productId) {
   let matchingProduct;
   cart.forEach((cartItem) => {
@@ -74,13 +91,7 @@ export function updateDeliveryOption(deliveryOptionId, productId) {
 export function calculateTotalProducts() {
   let totalCents = 0;
   cart.forEach((cartItem) => {
-    let matchingProduct;
-    products.forEach((product) => {
-      if (cartItem.productId === product.id) {
-        matchingProduct = product;
-      }
-    });
-
+    let matchingProduct = getProduct(cartItem.productId)
     totalCents += matchingProduct.priceCents * cartItem.quantity;
   });
   return totalCents;
