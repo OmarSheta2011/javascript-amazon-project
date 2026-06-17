@@ -23,11 +23,11 @@ export function addToCart(productId, quantity) {
       deliveryOptionId: "1",
     });
   }
-  updateCartQuantityElement();
+  updateCartQuantity();
   saveToLocalStorage();
 }
 
-export function updateCartQuantityElement() {
+export function updateCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
@@ -70,7 +70,7 @@ export function removeFromCart(productId) {
     }
   });
   cart = newCart;
-  updateCartQuantityElement();
+  updateCartQuantity();
   saveToLocalStorage();
 }
 

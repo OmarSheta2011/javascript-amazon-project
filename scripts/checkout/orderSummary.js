@@ -1,15 +1,19 @@
 import {
   cart,
   removeFromCart,
-  updateCartQuantityElement,
+  updateCartQuantity,
   updateDeliveryOption,
   updateQuantity,
 } from "../../data/cart.js";
 import { products } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
 import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@1.11.21/+esm";
-import { deliveryOptions } from "../../data/deliveryOptions.js";
+import {
+  calculateDeliveryDate,
+  deliveryOptions,
+} from "../../data/deliveryOptions.js";
 import renderPaymentSummary from "./paymentSummary.js";
+import renderCheckoutHeader from "./checkoutHeader.js";
 // ---------------------------------------------------------------
 
 export default function renderOrderSummary() {
@@ -25,16 +29,15 @@ export default function renderOrderSummary() {
         matchingProduct = product;
       }
     });
-
     deliveryOptions.forEach((option) => {
       if (option.id === cartItem.deliveryOptionId) {
-        deliveryDate = option.deliveryDate;
+        deliveryDate = calculateDeliveryDate(option);
       }
     });
 
     html += `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
-              Delivery date: ${date.add(deliveryDate, "day").format("dddd, MMMM DD")}
+              Delivery date: ${deliveryDate}
             </div>
 
             <div class="cart-item-details-grid">
@@ -80,14 +83,11 @@ export default function renderOrderSummary() {
     let options = "";
     deliveryOptions.forEach((option) => {
       let shipping;
-      let deliveryDate = date.add(option.deliveryDate, "day");
-      let deliveryDateFormatted = deliveryDate.format("dddd, MMMM DD");
+      let deliveryDate = calculateDeliveryDate(option);
 
       if (option.id === "1") {
         shipping = "FREE";
-      } else if (option.id === "2") {
-        shipping = `$${formatCurrency(option.deliveryPriceCents)}`;
-      } else if (option.id === "3") {
+      } else {
         shipping = `$${formatCurrency(option.deliveryPriceCents)}`;
       }
 
@@ -101,7 +101,7 @@ export default function renderOrderSummary() {
 >
                   <div>
                     <div class="delivery-option-date">
-                      ${deliveryDateFormatted}
+                      ${deliveryDate}
                     </div>
                     <div class="delivery-option-price">
                       ${shipping} - Shipping
@@ -113,10 +113,8 @@ export default function renderOrderSummary() {
     return options;
   }
 
-  document.querySelector(".order-summary").innerHTML = "";
   document.querySelector(".order-summary").innerHTML = html;
 
-  updateCartQuantityElement();
   // -----------------------------------------------------
 
   document.querySelectorAll(".js-delete-link").forEach((link) => {
@@ -125,6 +123,7 @@ export default function renderOrderSummary() {
       removeFromCart(productId);
       renderOrderSummary();
       renderPaymentSummary();
+      renderCheckoutHeader();
     });
   });
 

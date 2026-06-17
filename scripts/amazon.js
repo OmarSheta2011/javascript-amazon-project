@@ -58,7 +58,7 @@ products.forEach((product) => {
 });
 
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
-cartModule.updateCartQuantityElement();
+cartModule.updateCartQuantity();
 
 function addedMessage(productId) {
   const addedMessageElement = document.querySelector(
@@ -82,7 +82,7 @@ document.querySelectorAll(".add-to-cart-button").forEach((button) => {
     );
     const quantity = Number(quantityElement.value);
     cartModule.addToCart(productId, quantity);
-    cartModule.updateCartQuantityElement();
+    cartModule.updateCartQuantity();
     addedMessage(productId);
     console.log(cartModule.cart);
     cartModule.saveToLocalStorage();

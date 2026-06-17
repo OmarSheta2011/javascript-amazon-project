@@ -1,6 +1,6 @@
 import {
   cart,
-  updateCartQuantityElement,
+  updateCartQuantity,
   calculateTotalProducts,
   calculateshipping,
   calculateTax,
@@ -10,7 +10,7 @@ import formatCurrency from "../utils/money.js";
 
 export default function renderPaymentSummary() {
 
-  const cartQuantity = updateCartQuantityElement();
+  const cartQuantity = updateCartQuantity();
   const totalProducts = calculateTotalProducts();
   const shipping = calculateshipping();
   const totalBefoteTax = shipping + totalProducts;
