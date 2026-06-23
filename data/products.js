@@ -34,6 +34,37 @@ class Product {
   getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
   }
+  displaExtraInfo() {
+    return "";
+  }
+}
+
+class Clothing extends Product {
+  sizeChartLink;
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+  displaExtraInfo() {
+    return `<a href="${this.sizeChartLink}" target="_blank
+    ">size chart</a>`;
+  }
+}
+
+class Appliance extends Product {
+  instructionLink;
+  warantyLink;
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionLink = productDetails.instructionLink;
+    this.warantyLink = productDetails.warantyLink;
+  }
+  displaExtraInfo() {
+    return `
+    <a href="${this.instructionLink}" target="_blank">instructions</a>
+    <a href="${this.warantyLink}" target="_blank">warranty</a>
+    `;
+  }
 }
 
 export const products = [
@@ -82,6 +113,9 @@ export const products = [
     },
     priceCents: 1899,
     keywords: ["toaster", "kitchen", "appliances"],
+    type: "appliance",
+    instructionLink: "images/appliance-instructions.png",
+    warantyLink: "images/appliance-warranty.png",
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -204,6 +238,9 @@ export const products = [
     },
     priceCents: 3074,
     keywords: ["water boiler", "appliances", "kitchen"],
+    type: "appliance",
+    instructionLink: "images/appliance-instructions.png",
+    warantyLink: "images/appliance-warranty.png",
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -496,5 +533,11 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((product) => {
+  if (product.type === "clothing") {
+    return new Clothing(product);
+  }
+  if (product.type === "appliance") {
+    return new Appliance(product);
+  }
   return new Product(product);
 });

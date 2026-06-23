@@ -1,20 +1,16 @@
 import {
-  cart,
-  updateCartQuantity,
-  calculateTotalProducts,
-  calculateshipping,
-  calculateTax,
-} from "../../data/cart.js";
+  cart
+} from "../../data/cart-class.js";
 import formatCurrency from "../utils/money.js";
 // -------------------------------------
 
 export default function renderPaymentSummary() {
 
-  const cartQuantity = updateCartQuantity();
-  const totalProducts = calculateTotalProducts();
-  const shipping = calculateshipping();
+  const cartQuantity = cart.updateCartQuantity();
+  const totalProducts = cart.calculateTotalProducts();
+  const shipping = cart.calculateshipping();
   const totalBefoteTax = shipping + totalProducts;
-  const tax = calculateTax(0.1);
+  const tax = cart.calculateTax(0.1);
   const orderTotal = tax + totalBefoteTax;
 
   const html = ` <div class="payment-summary-title">Order Summary</div>

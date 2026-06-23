@@ -1,10 +1,6 @@
 import {
-  cart,
-  removeFromCart,
-  updateCartQuantity,
-  updateDeliveryOption,
-  updateQuantity,
-} from "../../data/cart.js";
+  cart
+} from "../../data/cart-class.js";
 import { products } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
 import dayjs from "https://cdn.jsdelivr.net/npm/dayjs@1.11.21/+esm";
@@ -21,7 +17,7 @@ export default function renderOrderSummary() {
   let matchingProduct;
   const date = dayjs();
 
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     let deliveryDate;
     const productId = cartItem.productId;
     products.forEach((product) => {
@@ -120,7 +116,7 @@ export default function renderOrderSummary() {
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       const { productId } = link.dataset;
-      removeFromCart(productId);
+      cart.removeFromCart(productId);
       renderOrderSummary();
       renderPaymentSummary();
       renderCheckoutHeader();
@@ -148,7 +144,7 @@ export default function renderOrderSummary() {
             renderPaymentSummary();
           } else {
             let newQuantity = Number(quantityInput.value);
-            updateQuantity(productId, newQuantity);
+            cart.updateQuantity(productId, newQuantity);
             renderOrderSummary();
             renderPaymentSummary();
           }
@@ -163,7 +159,7 @@ export default function renderOrderSummary() {
           renderPaymentSummary();
         } else {
           let newQuantity = Number(quantityInput.value);
-          updateQuantity(productId, newQuantity);
+          cart.updateQuantity(productId, newQuantity);
           renderOrderSummary();
           renderPaymentSummary();
         }
@@ -174,7 +170,7 @@ export default function renderOrderSummary() {
   document.querySelectorAll(".js-delivery-option").forEach((element) => {
     element.addEventListener("click", () => {
       const { deliveryOptionId, productId } = element.dataset;
-      updateDeliveryOption(deliveryOptionId, productId);
+      cart.updateDeliveryOption(deliveryOptionId, productId);
       renderOrderSummary();
       renderPaymentSummary();
     });

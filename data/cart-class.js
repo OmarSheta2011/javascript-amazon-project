@@ -83,7 +83,7 @@ class Cart {
       }
     });
     matchingProduct.quantity = newQuantity;
-    saveToLocalStorage();
+    this.saveToLocalStorage();
   }
 
   removeFromCart(productId) {
@@ -99,7 +99,7 @@ class Cart {
   }
 
   calculateTax(taxInDecimal) {
-    taxInDecimal * (calculateshipping() + calculateTotalProducts());
+    return taxInDecimal * (this.calculateshipping() + this.calculateTotalProducts());
   }
 
   updateDeliveryOption(deliveryOptionId, productId) {
@@ -110,7 +110,7 @@ class Cart {
       }
     });
     matchingProduct.deliveryOptionId = deliveryOptionId;
-    saveToLocalStorage();
+    this.saveToLocalStorage();
   }
 
   calculateTotalProducts() {
@@ -123,11 +123,4 @@ class Cart {
   }
 }
 
-const cart = new Cart("cart-oop");
-const businesseCart = new Cart("cart-business");
-const mainCart = new Cart("cart");
-console.log(cart);
-console.log(businesseCart);
-console.log(mainCart);
-cart.localStorageKey = 'aaa';
-console.log(cart);
+export const cart = new Cart("cart");
